@@ -50,28 +50,44 @@ public class CharacterManager : MonoBehaviour
             {
                 SpawnAvatar(id);
                 userIDs.Add(id);
+                numCharacters++;
             }
         }
         //check if users have left scene
-        if (characters.Count < 0)
+        if (numCharacters > manager.GetUsersCount())
         {
-            foreach (GameObject character in characters)
+            foreach (Int64 id in userIDs)
             {
-                Int64 id = character.GetComponent<LightAvatarController>().UserID;
                 if (manager.GetUserIndexById(id) == -1)
                 {
-                    DestoryAvatar(character);
+                    DestoryAvatar(FindAvatarByID(id));
+                    numCharacters--;
                     return;
                 }
             }
         }
+
+       
         
+    }
+    GameObject FindAvatarByID(Int64 id)
+    {
+        foreach(Transform child in gameObject.transform)
+        {
+            if( id == child.gameObject.GetComponent<LightAvatarController>().UserID)
+            {
+                return child.gameObject;
+            }
+        }
+        return characters[0];
     }
 
     void SpawnAvatar(Int64 UserID)
     {
         GameObject character = Instantiate<GameObject>(playerPrefab);
+        character.transform.position = KinectManager.Instance.GetUserPosition(UserID);
         character.GetComponent<LightAvatarController>().UserID = UserID;
+        character.transform.parent = gameObject.transform;
         NetworkServer.Spawn(character);
         //foreach (Transform child in character.transform)
         //{

@@ -141,8 +141,8 @@ public class LightAvatarController : MonoBehaviour {
             {
                 bones[i].gameObject.SetActive(true);
 
-                bones[i].transform.localPosition = Vector3.zero;
-                bones[i].transform.localRotation = Quaternion.identity;
+                //bones[i].transform.localPosition = Vector3.zero;
+                //bones[i].transform.localRotation = Quaternion.identity;
 
                 if (skeletonLine)
                 {
