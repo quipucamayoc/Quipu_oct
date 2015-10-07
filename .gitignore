@@ -5,3 +5,6 @@ Assets/KinectDemos/
 builds/
 Temp/
 Assets/KinectScripts/
+Assets/Resources/
+*.meta
+ProjectSettings/
